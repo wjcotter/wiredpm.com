@@ -7,9 +7,9 @@ if ( file_exists( dirname( __FILE__ ) . '/local-config.php' ) ) {
 	include( dirname( __FILE__ ) . '/local-config.php' );
 } else {
 	define( 'WP_LOCAL_DEV', false );
-	define( 'DB_NAME', '%%DB_NAME%%' );
-	define( 'DB_USER', '%%DB_USER%%' );
-	define( 'DB_PASSWORD', '%%DB_PASSWORD%%' );
+	define( 'wordpress', '%%DB_NAME%%' );
+	define( 'bill', '%%DB_USER%%' );
+	define( 'Irish510', '%%DB_PASSWORD%%' );
 	define( 'DB_HOST', '%%DB_HOST%%' ); // Probably 'localhost'
 }
 
@@ -18,6 +18,12 @@ if ( file_exists( dirname( __FILE__ ) . '/local-config.php' ) ) {
 // ========================
 define( 'WP_CONTENT_DIR', dirname( __FILE__ ) . '/content' );
 define( 'WP_CONTENT_URL', 'http://' . $_SERVER['HTTP_HOST'] . '/content' );
+
+// ===============================
+// Switch SITEURL & HOME Constants
+// ===============================
+
+define( 'RELOCATE', true);
 
 // ================================================
 // You almost certainly do not want to change these
@@ -81,3 +87,9 @@ define( 'STAGING_DOMAIN', '%%WP_STAGING_DOMAIN%%' ); // Does magic in WP Stack t
 if ( !defined( 'ABSPATH' ) )
 	define( 'ABSPATH', dirname( __FILE__ ) . '/wp/' );
 require_once( ABSPATH . 'wp-settings.php' );
+
+
+//==================================
+//Bypass FTP connection credentials:
+//==================================
+define('FS_METHOD','direct');
