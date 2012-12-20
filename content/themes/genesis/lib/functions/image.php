@@ -5,7 +5,7 @@
  * @category Genesis
  * @package  Images
  * @author   StudioPress
- * @license  http://www.opensource.org/licenses/gpl-license.php GPL-2.0+
+ * @license  http://www.opensource.org/licenses/gpl-license.php GPL v2.0 (or later)
  * @link     http://www.studiopress.com/themes/genesis
  */
 
@@ -46,11 +46,10 @@ function genesis_get_image_id( $index = 0 ) {
  * Returns an image pulled from the media gallery.
  *
  * Supported $args keys are:
- * - format   - string, default is 'html'
- * - size     - string, default is 'full'
- * - num      - integer, default is 0
- * - attr     - string, default is ''
- * - fallback - mixed, default is 'first-attached'
+ * - format - string, default is 'html'
+ * - size   - string, default is 'full'
+ * - num    - integer, default is 0
+ * - attr   - string, default is ''
  *
  * @since 0.1.0
  *
@@ -64,13 +63,14 @@ function genesis_get_image( $args = array() ) {
 
 	global $post;
 
-	$defaults = apply_filters( 'genesis_get_image_default_args', array(
+	$defaults = array(
 		'format'	=> 'html',
 		'size'		=> 'full',
 		'num'		=> 0,
 		'attr'		=> '',
-		'fallback'  => 'first-attached',
-	) );
+	);
+
+	$defaults = apply_filters( 'genesis_get_image_default_args', $defaults );
 
 	$args = wp_parse_args( $args, $defaults );
 
@@ -84,21 +84,12 @@ function genesis_get_image( $args = array() ) {
 		$id = get_post_thumbnail_id();
 		$html = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
 		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false, $args['attr'] );
-	}	
-	/** Else if first-attached, pull the first (default) image attachment */
-	elseif ( 'first-attached' == $args['fallback'] ) {
+	}
+	/** Else pull the first (default) image attachment */
+	else {
 		$id = genesis_get_image_id( $args['num'] );
 		$html = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
 		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false, $args['attr'] );
-	}
-	/** Else if fallback array exists */
-	elseif ( is_array( $args['fallback'] ) ) {
-		$html = $args['fallback']['html'];
-		$url  = $args['fallback']['url'];
-	}
-	/** Else, return false (no image) */
-	else {
-		return false;
 	}
 
 	/** Source path, relative to the root */

@@ -6,7 +6,7 @@
  * @package    Structure
  * @subpackage Archives
  * @author     StudioPress
- * @license    http://www.opensource.org/licenses/gpl-license.php GPL-2.0+
+ * @license    http://www.opensource.org/licenses/gpl-license.php GPL v2.0 (or later)
  * @link       http://www.studiopress.com/themes/genesis
  */
 
@@ -46,7 +46,7 @@ function genesis_do_taxonomy_title_description() {
 	$headline = $intro_text = '';
 
 	if ( $term->meta['headline'] )
-		$headline = sprintf( '<h1 class="archive-title">%s</h1>', $term->meta['headline'] );
+		$headline = sprintf( '<h1>%s</h1>', $term->meta['headline'] );
 	if ( $term->meta['intro_text'] )
 		$intro_text = wpautop( $term->meta['intro_text'] );
 
@@ -81,7 +81,7 @@ function genesis_do_author_title_description() {
 	$headline   = get_the_author_meta( 'headline', (int) get_query_var( 'author' ) );
 	$intro_text = get_the_author_meta( 'intro_text', (int) get_query_var( 'author' ) );
 
-	$headline   = $headline ? sprintf( '<h1 class="archive-title">%s</h1>', esc_html( $headline ) ) : '';
+	$headline   = $headline ? sprintf( '<h1>%s</h1>', esc_html( $headline ) ) : '';
 	$intro_text = $intro_text ? wpautop( wp_kses( $intro_text, genesis_formatting_allowedtags() ) ) : '';
 
 	if ( $headline || $intro_text )

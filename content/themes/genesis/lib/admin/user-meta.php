@@ -8,43 +8,12 @@
  * @package    Admin
  * @subpackage User-Meta
  * @author     StudioPress
- * @license    http://www.opensource.org/licenses/gpl-license.php GPL-2.0+
+ * @license    http://www.opensource.org/licenses/gpl-license.php GPL v2.0 (or later)
  * @link       http://www.studiopress.com/themes/genesis
  */
 
-add_filter( 'user_contactmethods', 'genesis_user_contactmethods' );
-/**
- * Filter the contact methods registered for users.
- *
- * @since 1.9.0
- */
-function genesis_user_contactmethods( $contactmethods ) {
-
-	$contactmethods['googleplus'] = __( 'Google+', 'genesis' );
-
-	return $contactmethods;
-	
-}
-
-add_action( 'admin_init', 'genesis_add_user_profile_fields' );
-/**
- * Hook the User profile options.
- *
- * @since 1.9.0
- */
-function genesis_add_user_profile_fields() {
-
-	add_action( 'show_user_profile', 'genesis_user_options_fields' );
-	add_action( 'edit_user_profile', 'genesis_user_options_fields' );
-	add_action( 'show_user_profile', 'genesis_user_archive_fields' );
-	add_action( 'edit_user_profile', 'genesis_user_archive_fields' );
-	add_action( 'show_user_profile', 'genesis_user_seo_fields' );
-	add_action( 'edit_user_profile', 'genesis_user_seo_fields' );
-	add_action( 'show_user_profile', 'genesis_user_layout_fields' );
-	add_action( 'edit_user_profile', 'genesis_user_layout_fields' );
-	
-}
-
+add_action( 'show_user_profile', 'genesis_user_options_fields' );
+add_action( 'edit_user_profile', 'genesis_user_options_fields' );
 /**
  * Adds fields for user permissions for Genesis features to the user edit screen.
  *
@@ -88,6 +57,8 @@ function genesis_user_options_fields( $user ) {
 
 }
 
+add_action( 'show_user_profile', 'genesis_user_archive_fields' );
+add_action( 'edit_user_profile', 'genesis_user_archive_fields' );
 /**
  * Adds fields for author archives contents to the user edit screen.
  *
@@ -139,7 +110,7 @@ function genesis_user_archive_fields( $user ) {
 				<td>
 					<input id="meta[genesis_author_box_single]" name="meta[genesis_author_box_single]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'genesis_author_box_single', $user->ID ) ); ?> />
 					<label for="meta[genesis_author_box_single]"><?php _e( 'Enable Author Box on this User\'s Posts?', 'genesis' ); ?></label><br />
-					<input id="meta[genesis_author_box_archive]" name="meta[genesis_author_box_archive]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'genesis_author_box_archive', $user->ID ) ); ?> />
+					<input id=""meta[genesis_author_box_archive]" name="meta[genesis_author_box_archive]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'genesis_author_box_archive', $user->ID ) ); ?> />
 					<label for="meta[genesis_author_box_archive]"><?php _e( 'Enable Author Box on this User\'s Archives?', 'genesis' ); ?></label>
 				</td>
 			</tr>
@@ -149,6 +120,8 @@ function genesis_user_archive_fields( $user ) {
 
 }
 
+add_action( 'show_user_profile', 'genesis_user_seo_fields' );
+add_action( 'edit_user_profile', 'genesis_user_seo_fields' );
 /**
  * Adds fields for author archive SEO to the user edit screen.
  *
@@ -220,6 +193,8 @@ function genesis_user_seo_fields( $user ) {
 
 }
 
+add_action( 'show_user_profile', 'genesis_user_layout_fields' );
+add_action( 'edit_user_profile', 'genesis_user_layout_fields' );
 /**
  * Adds author archive layout picker to the user edit screen.
  *

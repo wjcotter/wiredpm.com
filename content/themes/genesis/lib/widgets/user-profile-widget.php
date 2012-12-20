@@ -39,7 +39,7 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 			'author_info'    => '',
 			'bio_text'       => '',
 			'page'           => '',
-			'page_link_text' => __( 'Read More', 'genesis' ) . '&#x02026;',
+			'page_link_text' => sprintf( __( '[Read More %s]', 'genesis' ), g_ent( '&hellip;' ) ),
 			'posts_link'     => '',
 		);
 

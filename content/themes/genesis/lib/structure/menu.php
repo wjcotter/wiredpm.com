@@ -6,7 +6,7 @@
  * @package    Structure
  * @subpackage Menus
  * @author     StudioPress
- * @license    http://www.opensource.org/licenses/gpl-license.php GPL-2.0+
+ * @license    http://www.opensource.org/licenses/gpl-license.php GPL v2.0 (or later)
  * @link       http://www.studiopress.com/themes/genesis
  */
 
@@ -24,15 +24,10 @@ function genesis_register_nav_menus() {
 		return;
 
 	$menus = get_theme_support( 'genesis-menus' );
-
-	/** Register supported menus */
+	
 	foreach ( (array) $menus[0] as $id => $name ) {
 		register_nav_menu( $id , $name );
 	}
-
-	/** Register mobile menu?*/
-	if ( genesis_get_theme_support_arg( 'genesis-responsive', 'menu' ) )
-		register_nav_menu( 'mobile',  __( 'Mobile Navigation Menu', 'genesis' ) );
 
 	do_action( 'genesis_register_nav_menus' );
 
@@ -61,26 +56,36 @@ function genesis_do_nav() {
 	if ( ! genesis_nav_menu_supported( 'primary' ) )
 		return;
 
-	/** If viewing mobile, and child theme supports responsive, and 'menu-mobile' has a menu ... disable primary nav */
-	if ( wp_is_mobile() && current_theme_supports( 'genesis-responsive' ) && has_nav_menu( 'mobile' ) )
-		return;
+	if ( genesis_get_option( 'nav' ) ) {
+		if ( has_nav_menu( 'primary' ) ) {
+			$args = array(
+				'theme_location' => 'primary',
+				'container'      => '',
+				'menu_class'     => genesis_get_option( 'nav_superfish' ) ? 'menu menu-primary superfish' : 'menu menu-primary',
+				'echo'           => 0,
+			);
 
-	/** If menu is assigned to theme location, output */
-	if ( has_nav_menu( 'primary' ) ) {
+			$nav = wp_nav_menu( $args );
+		} elseif ( 'nav-menu' != genesis_get_option( 'nav_type', 'genesis-vestige' ) ) {
+			$args = array(
+				'theme_location' => 'primary',
+				'menu_class'     => genesis_get_option( 'nav_superfish' ) ? 'menu menu-primary superfish' : 'menu menu-primary',
+				'show_home'      => genesis_get_option( 'nav_home', 'genesis-vestige' ),
+				'type'           => genesis_get_option( 'nav_type', 'genesis-vestige' ),
+				'sort_column'    => genesis_get_option( 'nav_pages_sort', 'genesis-vestige' ),
+				'orderby'        => genesis_get_option( 'nav_categories_sort', 'genesis-vestige' ),
+				'depth'          => genesis_get_option( 'nav_depth', 'genesis-vestige' ),
+				'exclude'        => genesis_get_option( 'nav_exclude', 'genesis-vestige' ),
+				'include'        => genesis_get_option( 'nav_include', 'genesis-vestige' ),
+				'echo'           => false,
+			);
 
-		$args = array(
-			'theme_location' => 'primary',
-			'container'      => '',
-			'menu_class'     => genesis_get_option( 'nav_superfish' ) ? 'menu genesis-nav-menu menu-primary superfish' : 'menu genesis-nav-menu menu-primary',
-			'echo'           => 0,
-		);
-
-		$nav = wp_nav_menu( $args );
+			$nav = genesis_nav( $args );
+		}
 
 		$nav_output = sprintf( '<div id="nav">%2$s%1$s%3$s</div>', $nav, genesis_structural_wrap( 'nav', 'open', 0 ), genesis_structural_wrap( 'nav', 'close', 0 ) );
 
 		echo apply_filters( 'genesis_do_nav', $nav_output, $nav, $args );
-
 	}
 
 }
@@ -108,30 +113,42 @@ function genesis_do_subnav() {
 	if ( ! genesis_nav_menu_supported( 'secondary' ) )
 		return;
 
-	/** If viewing mobile, and child theme supports responsive, and 'menu-mobile' has a menu ... disable secondary nav */
-	if ( wp_is_mobile() && current_theme_supports( 'genesis-responsive' ) && has_nav_menu( 'mobile' ) )
-		return;
+	if ( genesis_get_option( 'subnav' ) ) {
+		if ( has_nav_menu( 'secondary' ) ) {
+			$args = array(
+				'theme_location' => 'secondary',
+				'container'      => '',
+				'menu_class'     => genesis_get_option( 'subnav_superfish' ) ? 'menu menu-secondary superfish' : 'menu menu-secondary',
+				'echo'           => 0,
+			);
 
-	/** If menu is assigned to theme location, output */
-	if ( has_nav_menu( 'secondary' ) ) {
+			$subnav = wp_nav_menu( $args );
+		} elseif ( 'nav-menu' != genesis_get_option( 'subnav_type', 'genesis-vestige' ) ) {
+			$args = array(
+				'theme_location' => 'secondary',
+				'menu_class'     => 'menu menu-secondary',
+				'show_home'      => genesis_get_option( 'subnav_home', 'genesis-vestige' ),
+				'type'           => genesis_get_option( 'subnav_type', 'genesis-vestige' ),
+				'sort_column'    => genesis_get_option( 'subnav_pages_sort', 'genesis-vestige' ),
+				'orderby'        => genesis_get_option( 'subnav_categories_sort', 'genesis-vestige' ),
+				'depth'          => genesis_get_option( 'subnav_depth', 'genesis-vestige' ),
+				'exclude'        => genesis_get_option( 'subnav_exclude', 'genesis-vestige' ),
+				'include'        => genesis_get_option( 'subnav_include', 'genesis-vestige' ),
+				'echo'           => false,
+			);
 
-		$args = array(
-			'theme_location' => 'secondary',
-			'container'      => '',
-			'menu_class'     => genesis_get_option( 'subnav_superfish' ) ? 'menu genesis-nav-menu menu-secondary superfish' : 'menu genesis-nav-menu menu-secondary',
-			'echo'           => 0,
-		);
-
-		$subnav = wp_nav_menu( $args );
+			$subnav = genesis_nav( $args );
+		}
 
 		$subnav_output = sprintf( '<div id="subnav">%2$s%1$s%3$s</div>', $subnav, genesis_structural_wrap( 'subnav', 'open', 0 ), genesis_structural_wrap( 'subnav', 'close', 0 ) );
 
 		echo apply_filters( 'genesis_do_subnav', $subnav_output, $subnav, $args );
-
 	}
 
 }
 
+
+add_filter( 'genesis_nav_items', 'genesis_nav_right', 10, 2 );
 add_filter( 'wp_nav_menu_items', 'genesis_nav_right', 10, 2 );
 /**
  * Filters the Primary Navigation menu items, appending either RSS links,
@@ -174,39 +191,5 @@ function genesis_nav_right( $menu, $args ) {
 	}
 
 	return $menu;
-
-}
-
-#add_action( 'genesis_before', 'genesis_do_mobile_menu' );
-/**
- * Echoes the "Mobile Navigation" menu.
- *
- * Conditionally outputs the menu assigned to the 'mobile' theme location, if site is being
- * viewed in mobile, child theme supports responsive, and 'mobile' location has a menu.
- *
- * Output can be filtered via 'genesis_do_mobile_menu'.
- *
- * @since 1.9.0
- *
- * @uses genesis_structural_wrap() Adds optional internal wrap divs
- */
-function genesis_do_mobile_menu() {
-
-	/** Must be mobile, supported, and active to display mobile menu */
-	if ( ! wp_is_mobile() || ! genesis_get_theme_support_arg( 'genesis-responsive', 'menu' ) || ! has_nav_menu( 'mobile' ) )
-		return;
-
-	$args = array(
-		'theme_location' => 'mobile',
-		'container'      => '',
-		'menu_class'     => 'menu menu-mobile',
-		'echo'           => 0,
-	);
-
-	$menu = wp_nav_menu( $args );
-
-	$menu_output = sprintf( '<div id="mobile-menu">%2$s%1$s%3$s</div>', $menu, genesis_structural_wrap( 'mobile-menu', 'open', 0 ), genesis_structural_wrap( 'mobile-menu', 'close', 0 ) );
-
-	echo apply_filters( 'genesis_do_mobile_menu', $menu_output, $menu, $args );
 
 }

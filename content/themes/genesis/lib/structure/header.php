@@ -6,7 +6,7 @@
  * @package    Structure
  * @subpackage Header
  * @author     StudioPress
- * @license    http://www.opensource.org/licenses/gpl-license.php GPL-2.0+
+ * @license    http://www.opensource.org/licenses/gpl-license.php GPL v2.0 (or later)
  * @link       http://www.studiopress.com/themes/genesis
  */
 
@@ -232,19 +232,6 @@ function genesis_default_title( $title, $sep, $seplocation ) {
 	/** Else append the site name */
 	$title = 'right' == $seplocation ? $title . " $sep " . get_bloginfo( 'name' ) : get_bloginfo( 'name' ) . " $sep " . $title;
 	return esc_html( trim( $title ) );
-
-}
-
-#add_action( 'wp_head', 'genesis_responsive_viewport' );
-/**
- * Checks to see if the child theme supports Genesis responsive CSS viewport tag. If so, it echos it.
- *
- * @since 1.9.0
- */
-function genesis_responsive_viewport() {
-
-	if ( $viewport = genesis_get_theme_support_arg( 'genesis-responsive', 'viewport' ) )
-		echo $viewport;
 
 }
 
@@ -614,35 +601,6 @@ function genesis_canonical() {
 
 }
 
-add_action( 'wp_head', 'genesis_rel_author' );
-/**
- * Echo custom rel="author" link tag.
- *
- * If the appropriate information has been entered, either for the homepage author,
- * or for an individual post/page author, echo a custom rel="author" link.
- *
- * @since 1.9.0
- *
- * @uses genesis_get_seo_option()
- *
- * @global $post
- * @return null Returns null on failure
- */
-function genesis_rel_author() {
-
-	if ( is_front_page() && $gplus_url = get_user_option( 'googleplus', genesis_get_seo_option( 'home_author' ) ) ) {
-		printf( '<link rel="author" href="%s" />', esc_url( $gplus_url ) );
-		return;
-	}
-
-	global $post;
-
-	if ( is_singular() && isset( $post->post_author ) && $gplus_url = get_user_option( 'googleplus', $post->post_author ) ) {
-		printf( '<link rel="author" href="%s" />', esc_url( $gplus_url ) );
-	}
-
-}
-
 add_action( 'genesis_meta', 'genesis_load_favicon' );
 /**
  * Echo favicon link if one is found.
@@ -726,6 +684,10 @@ function genesis_custom_header() {
 
 	/** If not active (Genesis of WP custom header), do nothing */
 	if ( ! $custom_header && ! $wp_custom_header )
+		return;
+
+	/** If not active, do nothing */
+	if ( ! $custom_header )
 		return;
 
 	/** Blog title option is obsolete when custom header is active */
@@ -892,24 +854,8 @@ function genesis_do_header() {
 	if ( is_active_sidebar( 'header-right' ) || has_action( 'genesis_header_right' ) ) {
 		echo '<div class="widget-area">';
 		do_action( 'genesis_header_right' );
-		add_filter( 'wp_nav_menu_args', 'genesis_header_menu_args' );
 		dynamic_sidebar( 'header-right' );
-		remove_filter( 'wp_nav_menu_args', 'genesis_header_menu_args' );
 		echo '</div><!-- end .widget-area -->';
 	}
-
-}
-
-/**
- * Sets a common class, .genesis-nav-menu, for the custom menu widget if used in the header right sidebar
- *
- * @since 1.9
- */
-function genesis_header_menu_args( $args ) {
-
-	#$args['container'] = 'div'; //lets us change this to 'nav' when Genesis supports HTML5 could be removed for 1.9
-	$args['menu_class'] .= ' genesis-nav-menu';
-
-	return $args;
 
 }

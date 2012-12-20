@@ -8,7 +8,7 @@
  * @category Genesis
  * @package  Shortcodes
  * @author   StudioPress
- * @license  http://www.opensource.org/licenses/gpl-license.php GPL-2.0+
+ * @license  http://www.opensource.org/licenses/gpl-license.php GPL v2.0 (or later)
  * @link     http://www.studiopress.com/themes/genesis
  */
 
@@ -76,7 +76,7 @@ function genesis_footer_copyright_shortcode( $atts ) {
 	$defaults = array(
 		'after'     => '',
 		'before'    => '',
-		'copyright' => '&#x000A9;',
+		'copyright' => g_ent( '&copy;' ),
 		'first'     => '',
 	);
 	$atts = shortcode_atts( $defaults, $atts );
@@ -84,7 +84,7 @@ function genesis_footer_copyright_shortcode( $atts ) {
 	$output = $atts['before'] . $atts['copyright'] . ' ';
 
 	if ( '' != $atts['first'] && date( 'Y' ) != $atts['first'] )
-		$output .= $atts['first'] . '&#x02013;';
+		$output .= $atts['first'] . g_ent( '&ndash;' );
 
 	$output .= date( 'Y' ) . $atts['after'];
 
@@ -114,7 +114,7 @@ function genesis_footer_childtheme_link_shortcode( $atts ) {
 
 	$defaults = array(
 		'after'  => '',
-		'before' => '&#x000B7;',
+		'before' => g_ent( '&middot; ' ),
 	);
 	$atts = shortcode_atts( $defaults, $atts );
 

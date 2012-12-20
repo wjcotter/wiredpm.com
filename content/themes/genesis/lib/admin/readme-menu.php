@@ -5,7 +5,7 @@
  * @category Genesis
  * @package  Admin
  * @author   StudioPress
- * @license  http://www.opensource.org/licenses/gpl-license.php GPL-2.0+
+ * @license  http://www.opensource.org/licenses/gpl-license.php GPL v2.0 (or later)
  * @link     http://www.studiopress.com/themes/genesis
  */
 

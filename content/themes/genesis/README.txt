@@ -7,9 +7,6 @@
 3. Be sure to activate the Genesis child theme, and not the Genesis parent theme.
 4. Inside your WordPress dashboard, go to Genesis > Theme Settings and configure them to your liking.
 
-<strong>USER MANUAL</strong>
-For useful and specific instructions on getting started, please download the <a href="http://www.studiopress.com/download/genesis-for-beginners.pdf">Genesis for Beginners User Manual</a>. (PDF format)
-
 <strong>WIDGET AREAS</strong>
 Primary Sidebar - This is the primary sidebar if you are using the Content/Sidebar, Sidebar/Content, Content/Sidebar/Sidebar, Sidebar/Sidebar/Content or Sidebar/Content/Sidebar Site Layout option.
 Secondary Sidebar - This is the secondary sidebar if you are using the Content/Sidebar/Sidebar, Sidebar/Sidebar/Content or Sidebar/Content/Sidebar Site Layout option.
@@ -18,8 +15,5 @@ Header Right - This is the widgeted area that appears at the top right of the he
 <strong>INDEX.PHP FILE</strong>
 This file in the Genesis Framework controls archive, author, category, search and tag pages. If you wish to control them individually, you can create/use archive.php, author.php, category.php, search.php and tag.php files respectively.
 
-<strong>TEXTURE</strong>
-The background texture that is used in the Genesis Framework can be found at <a href="http://subtlepatterns.com/">Subtle Patterns</a>.
-
 <strong>SUPPORT</strong>
-Please visit <a href="http://my.studiopress.com/help">http://my.studiopress.com/help</a> for theme support.
+Please visit <a href="http://www.studiopress.com/support">http://www.studiopress.com/support</a> for theme support.
