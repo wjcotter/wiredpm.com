@@ -2,16 +2,32 @@
 // ===================================================
 // Load database info and local development parameters
 // ===================================================
-if ( file_exists( dirname( __FILE__ ) . '/local-config.php' ) ) {
-	define( 'WP_LOCAL_DEV', true );
-	include( dirname( __FILE__ ) . '/local-config.php' );
-} else {
-	define( 'WP_LOCAL_DEV', false );
-	define( 'DB_NAME', 'wordpress' );
-	define( 'DB_USER', 'bill' );
-	define( 'DB_PASSWORD', 'Irish510' );
-	define( 'DB_HOST', 'localhost' ); // Probably 'localhost'
+
+if ( file_exists( dirname( __FILE__ ) . '/wp-config-local.php' ) ) {
+
+    // Local Environment
+    define('WP_ENV', 'local');
+    define('WP_DEBUG', true);
+
+    require( 'wp-config-local.php' );
+
+} elseif ( file_exists( dirname( __FILE__ ) . '/wp-config-playground.php' ) ) {
+
+    // Playground Environment
+    define('WP_ENV', 'playground');
+    define('WP_DEBUG', true);
+
+    require( 'wp-config-playground.php' );
+
+} elseif ( file_exists( dirname( __FILE__ ) . '/wp-config-production.php' ) ) {
+
+    // Production Environment
+    define('WP_ENV', 'production');
+    define('WP_DEBUG', false);
+
+    require( 'wp-config-production.php' );
 }
+
 
 // ========================
 // Custom Content Directory
